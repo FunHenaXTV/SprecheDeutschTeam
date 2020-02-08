@@ -7,8 +7,11 @@ class Hello:
         self.iter = 0
         self.kof = 1
         self.k = 0
+        self.timer = 0
         self.color()
+
     def color(self):
+        self.timer += 1
         self.iter += self.kof*1
         if self.iter == 0:
             self.canvas.itemconfig(self.label, fill='#FFF')
