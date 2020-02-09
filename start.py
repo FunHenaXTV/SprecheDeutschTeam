@@ -1,5 +1,5 @@
 class Hello:
-    def __init__(self, root, canvas, label_change=''):
+    def __init__(self, root, canvas, label_change='', value=1):
         self.root = root
         self.canvas = canvas
         self.label_change = label_change
@@ -7,11 +7,15 @@ class Hello:
         self.kof = 1
         self.k = 0
         self.timer = 0
+        self.value = value
         if self.label_change == '':
             self.label = canvas.create_text(300, 250, text='SprecheDeutsch Team', font="Verdana 30", fill='#fff')
             self.label2 = canvas.create_text(300, 300, text='Presents', font="Verdana 30", fill='#fff')
             self.color()
         else:
+            if self.value == -1:
+                self.kof = -1
+                self.iter = 15
             self.change_color_animation()
 
         
@@ -73,6 +77,8 @@ class Hello:
         if self.k < 4:
             self.loop = self.root.after(100, self.color)
         else:
+            self.canvas.delete(self.label, self.label2)
+            del self.label, self.label2
             self.root.after_cancel(self.loop)
 
     def change_color_animation(self):
@@ -107,16 +113,11 @@ class Hello:
             self.canvas.itemconfig(self.label_change, fill='#151515')
         elif self.iter == 14:
             self.canvas.itemconfig(self.label_change, fill='#000')
-        elif self.iter == 15:
-            self.kof = -1
-            self.k += 1
-        elif self.iter == -1:
-            self.kof = 1
+        if self.iter == 15 or self.iter == 0:
             self.k += 1
         if self.k < 1:
             self.loop = self.root.after(100, self.change_color_animation)
-        else:
-            self.root.after_cancel(self.loop)
+
 
 iter = 0
 kof = 1
