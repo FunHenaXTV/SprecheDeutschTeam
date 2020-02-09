@@ -70,12 +70,13 @@ class Photo:
             del self.image1, self.image2, self.image3, self.image4
             if (event.x >= 0 and event.x < 960) and (event.y >= 220 and event.y < 650):
                 print('square 1')
-                character = canvas.create_polygon(500, 500, 600, 500, 600, 700, 500, 700, outline='green', fill='#fff')
+                character = canvas.create_polygon(500, 500, 600, 500, 600, 700, 500, 700, outline='green', fill='#fff', width=3)
                 blocks.append(canvas.create_polygon(0, 800, 800, 800, 800, 1080, 0, 1080, outline='red', fill='#fff'))
                 blocks.append(canvas.create_polygon(800, 900, 1000, 900, 1000, 1080, 800, 1080, outline='red', fill='#fff'))
                 blocks.append(canvas.create_polygon(1000, 1000, 1200, 1000, 1200, 1080, 1000, 1080, outline='red', fill='#fff'))
                 blocks.append(canvas.create_polygon(1200, 1030, 1920, 1030, 1920, 1080, 1200, 1080, outline='red', fill='#fff'))
-                blocks.append(canvas.create_polygon(1600, 1030, 1600, 800, 1920, 800, 1920, 1030, outline='red', fill='#fff'))
+                blocks.append(canvas.create_polygon(1600, 800, 1920, 800, 1920, 1030, 1600, 1030, outline='red', fill='#fff'))
+                blocks.append(canvas.create_polygon(0, 450, 1200, 450, 1200, 490, 0, 490, outline='red', fill='#fff'))
                 physics = character_main.Physics(root, canvas, character, blocks)
 
                 root.bind_all('<Key>', physics.handler)
@@ -90,6 +91,7 @@ value = 0
 iter = 0
 lines = []
 blocks = []
+
 root = tk.Tk()
 root.title("SprecheDeutschTeam")
 root.configure(bg='#fff', width=1920, height=1080)
@@ -97,6 +99,7 @@ root.state('zoomed')
 root.overrideredirect(config.fullsize_window)
 canvas = tk.Canvas(root, bg='#fff', width=1920, height=1080)
 canvas.pack()
+blocks.append(canvas.create_polygon(0, 0, 1920, 0, 1920, 1, 1, 0, outline='red', fill='#fff'))
 hello = start.Hello(root, canvas)
 timer()
 iter = 0
