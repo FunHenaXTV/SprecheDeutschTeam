@@ -55,7 +55,7 @@ class Photo:
 
 
     def click(self, event):
-        global label, animation2, value
+        global label, animation2, value, blocks
         value += 1
         if value < 2:
             animation2 = start.Hello(root, canvas, label, -1)
@@ -70,8 +70,14 @@ class Photo:
             del self.image1, self.image2, self.image3, self.image4
             if (event.x >= 0 and event.x < 960) and (event.y >= 220 and event.y < 650):
                 print('square 1')
-                character = canvas.create_polygon(500, 500, 600, 500, 600, 700, 500, 700, fill='green')
-                physics = character_main.Physics(root, canvas, character)
+                character = canvas.create_polygon(500, 500, 600, 500, 600, 700, 500, 700, outline='green', fill='#fff')
+                blocks.append(canvas.create_polygon(0, 800, 800, 800, 800, 1080, 0, 1080, outline='red', fill='#fff'))
+                blocks.append(canvas.create_polygon(800, 900, 1000, 900, 1000, 1080, 800, 1080, outline='red', fill='#fff'))
+                blocks.append(canvas.create_polygon(1000, 1000, 1200, 1000, 1200, 1080, 1000, 1080, outline='red', fill='#fff'))
+                blocks.append(canvas.create_polygon(1200, 1030, 1920, 1030, 1920, 1080, 1200, 1080, outline='red', fill='#fff'))
+                blocks.append(canvas.create_polygon(1600, 1030, 1600, 800, 1920, 800, 1920, 1030, outline='red', fill='#fff'))
+                physics = character_main.Physics(root, canvas, character, blocks)
+
                 root.bind_all('<Key>', physics.handler)
             elif (event.x > 960 and event.x < 1920) and (event.y > 220 and event.y < 650):
                 print('square 2')
@@ -83,6 +89,7 @@ class Photo:
 value = 0
 iter = 0
 lines = []
+blocks = []
 root = tk.Tk()
 root.title("SprecheDeutschTeam")
 root.configure(bg='#fff', width=1920, height=1080)
