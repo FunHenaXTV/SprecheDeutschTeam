@@ -61,13 +61,13 @@ class Photo:
             del self.logo_1, self.logo_2, self.logo_3, self.logo_4
             del self.pilImage4, self.pilImage3, self.pilImage2, self.pilImage1
             del self.image1, self.image2, self.image3, self.image4
-            if (event.x >= 0 and event.x < 300) and (event.y >= 150 and event.y < 375):
+            if (event.x >= 0 and event.x < 960) and (event.y >= 220 and event.y < 650):
                 print('square 1')
-            elif (event.x > 300 and event.x < 600) and (event.y > 150 and event.y < 375):
+            elif (event.x > 960 and event.x < 1920) and (event.y > 220 and event.y < 650):
                 print('square 2')
-            elif (event.x > 0 and event.x < 300) and (event.y > 375 and event.y < 600):
+            elif (event.x > 0 and event.x < 960) and (event.y > 650 and event.y < 1080):
                 print('square 3')
-            elif (event.x >= 300 and event.x <= 600) and (event.y >= 375 and event.y <= 600):
+            elif (event.x >= 960 and event.x <= 1920) and (event.y >= 650 and event.y <= 1080):
                 print('square 4')
 
 value = 0
