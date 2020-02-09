@@ -9,8 +9,8 @@ class Hello:
         self.timer = 0
         self.value = value
         if self.label_change == '':
-            self.label = canvas.create_text(300, 250, text='SprecheDeutsch Team', font="Verdana 30", fill='#fff')
-            self.label2 = canvas.create_text(300, 300, text='Presents', font="Verdana 30", fill='#fff')
+            self.label = canvas.create_text(960, 485, text='SprecheDeutsch Team', font="Verdana 50", fill='#fff')
+            self.label2 = canvas.create_text(960, 550, text='Presents', font="Verdana 50", fill='#fff')
             self.color()
         else:
             if self.value == -1:

@@ -10,7 +10,7 @@ def timer():
     if iter == 1:
         time = root.after(7500, timer)
     else:
-        label = canvas.create_text(300, 100, text='Choose your character', font='Ubuntu 32', fill='#000')
+        label = canvas.create_text(960, 180, text='Choose your character', font='Ubuntu 42', fill='#000')
         animation = start.Hello(root, canvas, label)
 def timer_2():
     global iter, lines, hello, animation, photo
@@ -19,9 +19,9 @@ def timer_2():
         time = root.after(8700, timer_2)
     else:
         del hello, animation
-        lines.append(canvas.create_line(0, 150, 600, 150))
-        lines.append(canvas.create_line(300, 150, 300, 600))
-        lines.append(canvas.create_line(0, 375, 600, 375))
+        lines.append(canvas.create_line(0, 220, 1920, 220))
+        lines.append(canvas.create_line(960, 220, 960, 1080))
+        lines.append(canvas.create_line(0, 650, 1920, 650))
 
         photo.create()
 
@@ -31,19 +31,19 @@ class Photo:
     def create(self):
         self.pilImage1 = Image.open("character-1.png")
         self.image1 = ImageTk.PhotoImage(self.pilImage1)
-        self.logo_1 = canvas.create_image(150, 262.5, image=self.image1)
+        self.logo_1 = canvas.create_image(480, 435, image=self.image1)
 
         self.pilImage2 = Image.open("character-2.png")
         self.image2 = ImageTk.PhotoImage(self.pilImage2)
-        self.logo_2 = canvas.create_image(450, 262.5, image=self.image2)
+        self.logo_2 = canvas.create_image(1440, 435, image=self.image2)
 
         self.pilImage3 = Image.open("character-3.png")
         self.image3 = ImageTk.PhotoImage(self.pilImage3)
-        self.logo_3 = canvas.create_image(150, 487.5, image=self.image3)
+        self.logo_3 = canvas.create_image(480, 865, image=self.image3)
 
         self.pilImage4 = Image.open("character-4.png")
         self.image4 = ImageTk.PhotoImage(self.pilImage4)
-        self.logo_4 = canvas.create_image(450, 487.5, image=self.image4)
+        self.logo_4 = canvas.create_image(1440, 865 , image=self.image4)
 
 
 
@@ -75,8 +75,10 @@ iter = 0
 lines = []
 root = tk.Tk()
 root.title("SprecheDeutschTeam")
-root.configure(bg='#fff', width=600, height=600)
-canvas = tk.Canvas(root, bg='#fff', width=600, height=600)
+root.configure(bg='#fff', width=1920, height=1080)
+root.state('zoomed')
+root.overrideredirect(config.fullsize_window)
+canvas = tk.Canvas(root, bg='#fff', width=1920, height=1080)
 canvas.pack()
 hello = start.Hello(root, canvas)
 timer()
