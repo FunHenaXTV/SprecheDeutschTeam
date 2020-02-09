@@ -2,13 +2,16 @@ import tkinter as tk
 from random import randint
 from PIL import Image, ImageTk
 import config
-import character1
+import character_main
 import start
 def timer():
     global iter, animation, label
     iter += 1
     if iter == 1:
-        time = root.after(7500, timer)
+        if config.fast_load == 1:
+            time = root.after(750, timer)
+        else:
+            time = root.after(7500, timer)
     else:
         label = canvas.create_text(960, 180, text='Choose your character', font='Ubuntu 42', fill='#000')
         animation = start.Hello(root, canvas, label)
@@ -16,7 +19,10 @@ def timer_2():
     global iter, lines, hello, animation, photo
     iter += 1
     if iter == 1:
-        time = root.after(8700, timer_2)
+        if config.fast_load == 1:
+            time = root.after(870, timer_2)
+        else:
+            time = root.after(8700, timer_2)
     else:
         del hello, animation
         lines.append(canvas.create_line(0, 220, 1920, 220))
@@ -28,6 +34,7 @@ def timer_2():
 class Photo:
     def __init__(self):
         pass
+
     def create(self):
         self.pilImage1 = Image.open("character-1.png")
         self.image1 = ImageTk.PhotoImage(self.pilImage1)
@@ -63,6 +70,9 @@ class Photo:
             del self.image1, self.image2, self.image3, self.image4
             if (event.x >= 0 and event.x < 960) and (event.y >= 220 and event.y < 650):
                 print('square 1')
+                character = canvas.create_polygon(500, 500, 600, 500, 600, 700, 500, 700, fill='green')
+                physics = character_main.Physics(root, canvas, character)
+                root.bind_all('<Key>', physics.handler)
             elif (event.x > 960 and event.x < 1920) and (event.y > 220 and event.y < 650):
                 print('square 2')
             elif (event.x > 0 and event.x < 960) and (event.y > 650 and event.y < 1080):
@@ -85,5 +95,7 @@ timer()
 iter = 0
 timer_2()
 photo = Photo()
+
 canvas.bind('<Button-1>', photo.click)
+
 root.mainloop()

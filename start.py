@@ -1,18 +1,31 @@
+import config
 class Hello:
     def __init__(self, root, canvas, label_change='', value=1):
+        '''Animation for text. 2 requirement parametrs.
+           with out 3rd and 4th parametrs starts welcome screen animation.
+           Other way animate text(3rd parametr - widget id)
+           4th parametr:
+           value = 1 from white to black
+           value = -1 from black to white
+        '''
+
         self.root = root
         self.canvas = canvas
         self.label_change = label_change
-        self.iter = 0
-        self.kof = 1
-        self.k = 0
+        self.iter = 0 # amount of iterations
+        self.kof = 1 # coefficient(increasing or decreasing iteration amount)
+        self.k = 0 # amount of color change cycles
         self.timer = 0
         self.value = value
-        if self.label_change == '':
+        if config.fast_load == 1:
+            self.temp = 10 #TODO: ПРИДУМАТЬ НАЗВАНИЕ
+        else:
+            self.temp = 100
+        if self.label_change == '': #if 2 arguments given 
             self.label = canvas.create_text(960, 485, text='SprecheDeutsch Team', font="Verdana 50", fill='#fff')
             self.label2 = canvas.create_text(960, 550, text='Presents', font="Verdana 50", fill='#fff')
             self.color()
-        else:
+        else: # if 4 arguments given
             if self.value == -1:
                 self.kof = -1
                 self.iter = 15
@@ -21,7 +34,8 @@ class Hello:
         
 
     def color(self):
-        self.timer += 1
+        '''welcome screen animation.'''
+        self.timer += 1 #TODO: Delete
         self.iter += self.kof*1
         if self.iter == 0:
             self.canvas.itemconfig(self.label, fill='#FFF')
@@ -75,13 +89,14 @@ class Hello:
             self.kof = 1
             self.k += 1
         if self.k < 4:
-            self.loop = self.root.after(100, self.color)
+            self.loop = self.root.after(self.temp, self.color)
         else:
             self.canvas.delete(self.label, self.label2)
             del self.label, self.label2
             self.root.after_cancel(self.loop)
 
     def change_color_animation(self):
+        '''Animate given text'''
         self.iter += self.kof*1
         if self.iter == 0:
             self.canvas.itemconfig(self.label_change, fill='#FFF')
@@ -116,7 +131,7 @@ class Hello:
         if self.iter == 15 or self.iter == 0:
             self.k += 1
         if self.k < 1:
-            self.loop = self.root.after(100, self.change_color_animation)
+            self.loop = self.root.after(self.temp, self.change_color_animation)
 
 
 iter = 0
