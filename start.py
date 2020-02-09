@@ -122,12 +122,4 @@ class Hello:
 iter = 0
 kof = 1
 k = 0
-# root = tk.Tk()
-# root.title("SprecheDeutschTeam")
-# root.configure(bg='#fff', width=600, height=600)
 
-# canvas = tk.Canvas(root, bg='#fff', width=600, height=600)
-# canvas.pack()
-# hello = Hello()
-
-# root.mainloop()
