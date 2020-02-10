@@ -10,28 +10,39 @@ class Physics:
     def handler(self, event):
         key = event.keysym
         if key == 'Right':
-            self.speed_x += .1
-            if self.speed_x > 2:
-                self.speed_x = 2
+            self.right()
         elif key == 'Left':
-            self.speed_x -= .1
-            if self.speed_x < -2:
-                self.speed_x = -2
+            self.left()
         elif key == 'space' or key == 'Up':
-            if self.speed_y <= 0.00000001 and self.speed_y >= -0.00000001:
-                self.speed_y -= 2.5
+            self.jump()
+    
+    def right(self):
+        self.speed_x += .07
+        if self.speed_x > 2.5:
+            self.speed_x = 2.5
+
+    def left(self):
+        self.speed_x -= .07
+        if self.speed_x < -2.5:
+            self.speed_x = -2.5
+
+    def jump(self):
+        if self.speed_y <= 0.00000001 and self.speed_y >= -0.00000001:
+            self.speed_y -= 2.5
+
+
     def phys(self):
         if self.speed_y <= 0.00001 and self.speed_y >= -0.000001:
             if self.speed_x <= 0.000001 and self.speed_x >= -0.000001:
                 pass
             elif self.speed_x > 0:
-                self.speed_x -= 0.01/2
+                self.speed_x -= 0.01*3/2
             elif self.speed_x < 0:
-                self.speed_x += 0.01/2
+                self.speed_x += 0.01*3/2
         if self.speed_y <= 0.0000001 and self.speed_y >= -0.000000001:
             pass
         else:
-            self.speed_y += 0.0098
+            self.speed_y += 0.0098 * 2
     def collision_x(self):
         for block in self.blocks:
             statement = self.canvas.coords(self.character_id)[5] > self.canvas.coords(block)[1]
