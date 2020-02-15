@@ -1,3 +1,5 @@
+import time
+
 class Physics:
     def __init__(self, root, canvas, character_id, blocks):
         self.speed_x = 0
@@ -17,12 +19,12 @@ class Physics:
             self.jump()
     
     def right(self):
-        self.speed_x += .07
+        self.speed_x += .3
         if self.speed_x > 2.5:
             self.speed_x = 2.5
 
     def left(self):
-        self.speed_x -= .07
+        self.speed_x -= .3
         if self.speed_x < -2.5:
             self.speed_x = -2.5
 
@@ -45,40 +47,20 @@ class Physics:
             self.speed_y += 0.0098 * 2
     def collision_x(self):
         for block in self.blocks:
-            statement = self.canvas.coords(self.character_id)[5] > self.canvas.coords(block)[1]
-            statement *= self.canvas.coords(self.character_id)[5] < self.canvas.coords(block)[7]
 
-            statement3 = self.canvas.coords(self.character_id)[3] > self.canvas.coords(block)[1]
-            statement3 *= self.canvas.coords(self.character_id)[3] < self.canvas.coords(block)[7]
+            s = self.canvas.coords(self.character_id)[4] - self.canvas.coords(block)[0] > 2.6 and self.canvas.coords(block)[2] - self.canvas.coords(self.character_id)[4] > 2.6
+            s1 = self.canvas.coords(self.character_id)[5] - self.canvas.coords(block)[1] > 5 and self.canvas.coords(block)[7] - self.canvas.coords(self.character_id)[5] > 5
 
-            statement1 = self.canvas.coords(self.character_id)[5] > self.canvas.coords(block)[1]
-            statement1 *= self.canvas.coords(self.character_id)[3] < self.canvas.coords(block)[1]
+            if s and s1:
+                self.canvas.move(self.character_id, -(self.canvas.coords(self.character_id)[4] - self.canvas.coords(block)[0]) - 2, 0)
+                self.speed_x = -0.7
 
-            statement2 = self.canvas.coords(self.character_id)[3] > self.canvas.coords(block)[1]
-            statement2 *= self.canvas.coords(self.character_id)[5] < self.canvas.coords(block)[7]
+            s = self.canvas.coords(self.character_id)[6] - self.canvas.coords(block)[0] > 2.6 and self.canvas.coords(block)[2] - self.canvas.coords(self.character_id)[6] > 2.6
+            s1 = self.canvas.coords(self.character_id)[7] - self.canvas.coords(block)[1] > 2 and self.canvas.coords(block)[7] - self.canvas.coords(self.character_id)[7] > 2
+            if s and s1:
+                self.canvas.move(self.character_id, -(self.canvas.coords(self.character_id)[6] - self.canvas.coords(block)[2]) + 2, 0)
+                self.speed_x = 0.7
 
-            if statement2 or statement1 or statement or statement3:
-                if abs(self.canvas.coords(self.character_id)[2] - self.canvas.coords(block)[0]) < 1:
-                    if self.speed_x > 0:
-                        self.speed_x = -0.2
-
-        for block in self.blocks:
-            statement = self.canvas.coords(block)[5] > self.canvas.coords(self.character_id)[1]
-            statement *= self.canvas.coords(block)[5] < self.canvas.coords(self.character_id)[7]
-
-            statement3 = self.canvas.coords(block)[3] > self.canvas.coords(self.character_id)[1]
-            statement3 *= self.canvas.coords(block)[3] < self.canvas.coords(self.character_id)[7]
-
-            statement1 = self.canvas.coords(block)[5] > self.canvas.coords(self.character_id)[1]
-            statement1 *= self.canvas.coords(block)[3] < self.canvas.coords(self.character_id)[1]
-
-            statement2 = self.canvas.coords(block)[3] > self.canvas.coords(self.character_id)[1]
-            statement2 *= self.canvas.coords(block)[5] < self.canvas.coords(self.character_id)[7]
-
-            if statement2 or statement1 or statement or statement3:
-                if abs(self.canvas.coords(block)[2] - self.canvas.coords(self.character_id)[0]) < 1:
-                    if self.speed_x < 0:
-                        self.speed_x = 0.2
 
 
     def collision_y(self):
@@ -104,11 +86,39 @@ class Physics:
                 if self.canvas.coords(self.character_id)[1] < self.canvas.coords(block)[5]:
                     blocks.append(block) 
                     blocks_y_coords.append(self.canvas.coords(block)[1])
-        if self.canvas.coords(self.character_id)[5] < min(blocks_y_coords):
-            self.speed_y += 0.01
-        else:
-            self.speed_y = 0
+        try:
+            if self.canvas.coords(self.character_id)[5] < min(blocks_y_coords):
+                self.speed_y += 0.01
+            else:
+                self.speed_y = 0
+        except:
+            pass
+            s = self.canvas.coords(self.character_id)[6] - self.canvas.coords(block)[0] > 2 and self.canvas.coords(block)[2] - self.canvas.coords(self.character_id)[6] > 2
+            s1 = self.canvas.coords(self.character_id)[7] - self.canvas.coords(block)[1] > 5 and self.canvas.coords(block)[7] - self.canvas.coords(self.character_id)[7] > 5
+
+            s2 = self.canvas.coords(self.character_id)[6] - self.canvas.coords(block)[0] > 2 and self.canvas.coords(block)[2] - self.canvas.coords(self.character_id)[6] > 2
+            s3 = self.canvas.coords(self.character_id)[7] - self.canvas.coords(block)[1] > 5 and self.canvas.coords(block)[7] - self.canvas.coords(self.character_id)[7] > 5
+
+            if (s and s1) or (s2 and s3):
+                self.canvas.move(self.canvas.character_id, 0, -self.canvas.coords(self.character_id)[7] + self.canvas.coords(block)[3] - 2)
+
+
         for block in self.blocks:
+            statement = self.canvas.coords(self.character_id)[6] < self.canvas.coords(block)[0]
+            statement *= self.canvas.coords(self.character_id)[4] > self.canvas.coords(block)[0]
+
+            statement1 = self.canvas.coords(self.character_id)[4] > self.canvas.coords(block)[2]
+            statement1 *= self.canvas.coords(self.character_id)[6] < self.canvas.coords(block)[2]
+
+            statement2 = self.canvas.coords(self.character_id)[6] < self.canvas.coords(block)[2]
+            statement2 *= self.canvas.coords(self.character_id)[6] > self.canvas.coords(block)[0]
+
+            statement3 = self.canvas.coords(self.character_id)[4] < self.canvas.coords(block)[2]
+            statement3 *= self.canvas.coords(self.character_id)[4] > self.canvas.coords(block)[0]
+
+            statement4 = self.canvas.coords(self.character_id)[6] < self.canvas.coords(block)[0]
+            statement4 *= self.canvas.coords(self.character_id)[4] > self.canvas.coords(block)[2]
+
             if statement or statement1 or statement2 or statement3 or statement4:
                 if abs(self.canvas.coords(self.character_id)[1] - self.canvas.coords(block)[5]) < 1:
                     self.speed_y = 0.1
@@ -117,10 +127,12 @@ class Physics:
 
 
     def move(self):
-        self.canvas.move(self.character_id, self.speed_x, self.speed_y)
+        #self.canvas.xview_scroll(int(self.speed_x*2), 'units')
+        #self.canvas.yview_scroll(int(self.speed_y*2), 'units')
         self.phys()
-        self.collision_x()
+        self.canvas.move(self.character_id, self.speed_x, self.speed_y)
         self.collision_y()
+        self.collision_x()
         self.root.after(10, self.move)
 
 
